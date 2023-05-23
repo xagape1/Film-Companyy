@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import axios from 'axios'
 import './App.css';
+import { useState } from 'react';
+import YouTube from 'react-youtube';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserContext } from "./userContext";
+
+
+import LoginRegister from './auth/LoginRegister'
+import Header from './Layout/Header';
+import NotFound from "./NotFound";
+
+import Movies from "./Contenido/Movies";
+
 
 function App() {
+
+  let [authToken, setAuthToken] = useState("");
+  let [usuari, setUsuari] = useState("");
+  let [refresh, setRefresh] = useState(false);
+  let [usuariId, setUsuariId] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+     <UserContext.Provider value={{ refresh, setRefresh, usuari, setUsuari, authToken, setAuthToken, usuariId, setUsuariId }}>
+          {authToken ?
+            <>
+              <Routes>
+                <Route path="" element={< Movies/>} />
+
+              </Routes>
+            </>
+            :
+            <LoginRegister />
+          }
+      </UserContext.Provider>
+    </BrowserRouter>
+
   );
 }
 
