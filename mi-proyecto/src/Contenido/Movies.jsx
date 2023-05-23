@@ -6,6 +6,7 @@ import YouTube from 'react-youtube';
 import Header from '../Layout/Header';
 import { useNavigate } from 'react-router-dom';
 
+
 const Movies = () => {
 
   const navigate = useNavigate();
@@ -17,15 +18,13 @@ const Movies = () => {
 
   const API_URL = "https://api.themoviedb.org/3";
   const API_KEY = "66d0445880766ce11eae51e58a874209";
+  const LANGUAGE = "es-ES";
   const IMAGE_PATH = "https://image.tmdb.org/t/p/original";
 
-  // endpoint para las imagenes
   const URL_IMAGE = "https://image.tmdb.org/t/p/original";
 
-  // variables de estado
   const [movies, setMovies] = useState([]);
   const [searchKey, setSearchKey] = useState("");
-  // const [selectedMovie, setSelectedMovie] = useState({})
   const [trailer, setTrailer] = useState(null);
   const [movie, setMovie] = useState({ title: "Loading Movies" });
   const [playing, setPlaying] = useState(false);
@@ -38,11 +37,12 @@ const Movies = () => {
     } = await axios.get(`${API_URL}/${type}/movie`, {
       params: {
         api_key: API_KEY,
+        language: LANGUAGE,
         query: searchKey,
       },
     });
+
     //console.log('data',results);
-    //setSelectedMovie(results[0])
 
     setMovies(results);
     setMovie(results[0]);

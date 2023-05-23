@@ -1,75 +1,78 @@
-import { useEffect } from 'react';
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import tmdb from '../api/tmdb';
 import "./Series.css";
 import SeriesCard from './SeriesCard';
-import { useState } from 'react';
-import YouTube from 'react-youtube';
 import Header from '../Layout/Header';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Series = () => {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    console.log("movies");
+    navigate('/');
+  };
 
-    const API_URL = "https://api.themoviedb.org/3";
-    const API_KEY = "66d0445880766ce11eae51e58a874209";
-    const IMAGE_PATH = "https://image.tmdb.org/t/p/original";
+  const [series, setSeries] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
 
-    // endpoint para las imagenes
-    const URL_IMAGE = "https://image.tmdb.org/t/p/original";
-
-    // variables de estado
-    const [series, setSeries] = useState([]);
-    const [searchKey, setSearchKey] = useState("");
-    const [trailer, setTrailer] = useState(null);
-    const [movie, setMovie] = useState({ title: "Loading Movies" });
-    const [playing, setPlaying] = useState(false);
-
-
-    const fetchSeries = async (searchKey) => {
-        const type = searchKey ? "search" : "discover";
-        const {
-            data: { results },
-        } = await axios.get(`${API_URL}/${type}/tv/popular?`, {
-            params: {
-                api_key: API_KEY,
-                query: searchKey,
-            },
-        });
-
-        console.log('data', results);
-
-        setSeries(results);
-        setMovie(results[0]);
-
-        if (results.length) {
-            await fetchMovie(results[0].id);
+  const fetchSeries = async (searchKey) => {
+    try {
+      const response = await tmdb.get(searchKey ? 'search/tv' : 'tv/popular', {
+        params: {
+          query: searchKey
         }
-    };
+      });
+      setSeries(response.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const fetchSerie = async (id) => {
-        const { data } = await axios.get(`${API_URL}/movie/${id}`, {
-            params: {
-                api_key: API_KEY,
-                append_to_response: "videos",
-            },
-        });
+  useEffect(() => {
+    fetchSeries();
+  }, []);
 
-        if (data.videos && data.videos.results) {
-            const trailer = data.videos.results.find(
-                (vid) => vid.name === "Official Trailer"
-            );
-            setTrailer(trailer ? trailer : data.videos.results[0]);
-        }
-        //return data
-        setMovie(data);
-    };
+  const searchSeries = (e) => {
+    e.preventDefault();
+    fetchSeries(searchKey);
+  };
 
-
-    return (
-        <div>
-
-
+  return (
+    <div>
+      <div className="container">
+        <div className="inline-div" style={{ display: 'flex', flexDirection: 'row' }}>
+          <div>
+            <img className="left-logo" src="/images/logosinfilm.png" alt="Logo" />
+          </div>
+          <div>
+            <h2 className="left">Film Company</h2>
+          </div>
         </div>
-    )
-}
+        <div className="right">
+          <Header />
+        </div>
+      </div>
+      <form className="container mb-4 search-form" onSubmit={searchSeries}>
+        <div className="search-input-container">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search Content"
+            onChange={(e) => setSearchKey(e.target.value)}
+          />
+          <button className="boton search-button">Search</button>
+          <div>
+            <button className="button-link" onClick={handleButtonClick}>Movies</button>
+          </div>
+        </div>
+      </form>
+      <div className="series-container">
+        {series.map((serie, index) => {
+          return <SeriesCard key={index} {...serie} />;
+        })}
+      </div>
+    </div>
+  );
+};
 
-export default Series
+export default Series;

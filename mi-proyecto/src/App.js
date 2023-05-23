@@ -14,6 +14,7 @@ import NotFound from "./NotFound";
 
 import Movies from "./Contenido/Movies";
 import Series from './Contenido/Series';
+import SeriesCard from './Contenido/SeriesCard';
 
 function App() {
 
@@ -30,7 +31,6 @@ function App() {
               <Routes>
                 <Route path="/" element={< Movies/>} />
                 <Route path="/series" element={< Series/>} />
-
               </Routes>
             </>
             :
