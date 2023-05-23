@@ -13,7 +13,7 @@ import Header from './Layout/Header';
 import NotFound from "./NotFound";
 
 import Movies from "./Contenido/Movies";
-
+import Series from './Contenido/Series';
 
 function App() {
 
@@ -28,7 +28,8 @@ function App() {
           {authToken ?
             <>
               <Routes>
-                <Route path="" element={< Movies/>} />
+                <Route path="/" element={< Movies/>} />
+                <Route path="/series" element={< Series/>} />
 
               </Routes>
             </>

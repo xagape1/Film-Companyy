@@ -4,7 +4,16 @@ import "./Movies.css";
 import { useState } from 'react';
 import YouTube from 'react-youtube';
 import Header from '../Layout/Header';
+import { useNavigate } from 'react-router-dom';
+
 const Movies = () => {
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    console.log("series");
+    navigate('/series');
+  };
 
   const API_URL = "https://api.themoviedb.org/3";
   const API_KEY = "66d0445880766ce11eae51e58a874209";
@@ -16,7 +25,7 @@ const Movies = () => {
   // variables de estado
   const [movies, setMovies] = useState([]);
   const [searchKey, setSearchKey] = useState("");
-  //const [selectedMovie, setSelectedMovie] = useState({})
+  // const [selectedMovie, setSelectedMovie] = useState({})
   const [trailer, setTrailer] = useState(null);
   const [movie, setMovie] = useState({ title: "Loading Movies" });
   const [playing, setPlaying] = useState(false);
@@ -97,14 +106,22 @@ const Movies = () => {
           </div>
         </div>
         <form className="container mb-4 search-form" onSubmit={searchMovies}>
-          <input
-            className='search-form'
-            type="text"
-            placeholder="Search Content"
-            onChange={(e) => setSearchKey(e.target.value)}
-          />
-          <button className="boton search-button">Search</button>
+          <div className="search-input-container">
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search Content"
+              onChange={(e) => setSearchKey(e.target.value)}
+            />
+            <button className="boton search-button">Search</button>
+
+            <div>
+              <button className="button-link" onClick={handleButtonClick}>Series</button>
+            </div>
+
+          </div>
         </form>
+
         <div>
           <main>
             {movie ? (
