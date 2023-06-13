@@ -4,7 +4,6 @@ import { UserContext } from "../userContext";
 import { useForm } from "react-hook-form";
 import { useLogin } from '../hooks/useLogin';
 import './Login.css';
-import { Navigate } from 'react-router-dom';
 
 const Login = ({ setLogin }) => {
     const { doLogin, error, setError } = useLogin()
@@ -14,11 +13,10 @@ const Login = ({ setLogin }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-
     return (
         <div className="login-container">
             <form class="formi">
-                <img className="logo" src="/images/filmcompany.png" alt="Logo" />
+                <img className="logologin" src="/images/filmcompany.png" alt="Logo" />
                 <label className="labelLogin" for="form2Example1">Sign in</label>
                 <label className="label" >Email address</label>
                 <div className="form-outline mb-4">
@@ -27,7 +25,7 @@ const Login = ({ setLogin }) => {
                         pattern: {
                             value: /^[a-zA-Z0-9._%+-]+@/,
                             message:
-                                "El correu has d'escriure un correu"
+                                "The email you must write an email"
                         }
                     })}
                         type="email" id="form2Example1" className="form-control"

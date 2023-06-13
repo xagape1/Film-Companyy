@@ -44,7 +44,7 @@ const Register = ({ setLogin }) => {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label className="labelLogin" for="form2Example1">Register</label>
+        <label className="labelRegister" for="form2Example1">Register</label>
 
         <div className="form-outline mb-4">
           <label className="label" for="form3Example3cg">Your Name</label>
@@ -130,7 +130,7 @@ const Register = ({ setLogin }) => {
         >Sign up</button>
         {error ? (<div>{error}</div>) : (<></>)}
 
-        <img className="logo" src="/images/filmcompany.png" alt="Logo" />
+        <img className="logo" src="/images/logosinfilm.png" alt="Logo" />
 
 
       </form>
