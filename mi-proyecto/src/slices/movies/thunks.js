@@ -96,13 +96,13 @@ export const handleUpdate = (authToken, id, formulari, navigate) => {
         console.log(formulari.title)
         let { title, description,gender, cover,intro} = formulari;
 
-        console.log(upload)
+        console.log(cover)
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
         formData.append("gender", gender);
-        if (upload != undefined) formData.append("cover", cover);
-        if (upload != undefined) formData.append("intro", intro);
+        if (cover != undefined) formData.append("cover", cover);
+        if (intro != undefined) formData.append("intro", intro);
         console.log(formData)
         const data = await fetch(
             "http://127.0.0.1:8000/api/movies/" + id,
@@ -126,48 +126,6 @@ export const handleUpdate = (authToken, id, formulari, navigate) => {
 
     };
 };
-// export const getPlaces = (authToken,page=0) => {
-//     return async (dispatch, getState) => {
-//         dispatch(setisLoading(true));
-//         const url =
-
-//             page > 0
-
-//                 ? "https://backend.insjoaquimmir.cat/api/places?paginate=1&page=" + page
-
-//                 : "https://backend.insjoaquimmir.cat/api/places";
-//         const headers = {
-//             headers: {
-//                 Accept: "application/json",
-//                 Authorization: "Bearer " + authToken,
-//             },
-//             method: "GET",
-//         };
-//         // const url = "https://backend.insjoaquimmir.cat/api/places"
-//         const data = await fetch(url, headers);
-//         const resposta = await data.json();
-//         if (resposta.success == true) {
-//             if (page > 0) {
-//                 dispatch(setPlaces(resposta.data.collection));
-
-//                 dispatch(setPages(resposta.data.links));
-
-//                 console.log(resposta.data.links);
-
-//                 } else {
-
-//                 dispatch(setPlaces(resposta.data));
-
-//                 }
-//             dispatch(setisLoading(false));
-//             // dispatch(setPlaces(resposta.data));
-//             console.log(resposta.data)
-//         }
-//         else {
-//             dispatch(setError(resposta.message));
-//         }
-//     };
-// }
 
 
 export const getMovies = (authToken, page = 0) => {

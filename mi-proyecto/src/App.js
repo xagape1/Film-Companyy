@@ -16,6 +16,15 @@ import Movies from "./Contenido/Movies";
 import Series from './Contenido/Series';
 import SeriesCard from './Contenido/SeriesCard';
 
+
+import Movie from './movies/Movie';
+import MovieCreate from './movies/MovieCreate';
+import MovieEdit from './movies/MovieEdit';
+
+import MoviesGrid from './movies/MoviesGrid';
+import MovieGrid from './movies/MovieGrid';
+
+
 function App() {
 
   let [authToken, setAuthToken] = useState("");
@@ -25,17 +34,23 @@ function App() {
 
   return (
     <BrowserRouter>
-     <UserContext.Provider value={{ refresh, setRefresh, usuari, setUsuari, authToken, setAuthToken, usuariId, setUsuariId }}>
-          {authToken ?
-            <>
-              <Routes>
-                <Route path="/" element={< Movies/>} />
-                <Route path="/series" element={< Series/>} />
-              </Routes>
-            </>
-            :
-            <LoginRegister />
-          }
+      <UserContext.Provider value={{ refresh, setRefresh, usuari, setUsuari, authToken, setAuthToken, usuariId, setUsuariId }}>
+        {authToken ?
+          <>
+            <Routes>
+
+              <Route path="/movies/:id" element={<Movie />} />
+              <Route path="/movies/add" element={<MovieCreate />} />
+              <Route path="/movies/edit/:id" element={<MovieEdit />} />
+              <Route path="/movies/grid" element={<MoviesGrid />} />
+
+              <Route path="/" element={< Movies />} />
+              <Route path="/series" element={< Series />} />
+            </Routes>
+          </>
+          :
+          <LoginRegister />
+        }
       </UserContext.Provider>
     </BrowserRouter>
 

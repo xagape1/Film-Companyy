@@ -16,10 +16,10 @@ const Movie = () => {
     const { pathname } = useLocation()
     const { pathname1 } = useLocation()
 
-useEffect(() => {
-    dispatch(delMovie(authToken, navigate, id));
-    dispatch(getMovie(authToken, id));
-}, []);
+    useEffect(() => {
+        dispatch(delMovie(authToken, navigate, id));
+        dispatch(getMovie(authToken, id));
+    }, []);
 
 
 
@@ -39,8 +39,12 @@ useEffect(() => {
                 :
                 <>
                     <div class="card">
-                        <div class="card-header">
-                            <img class="img-fluid" src={"https://backend.insjoaquimmir.cat/storage/" + movie.cover.filepath} title="Image preview" width="300px" />
+                        <div class="card-header">s
+                            <img class="img-fluid" src={"http://localhost:8000/storage/" + movie.cover.filepath} title="Image preview" width="300px" />
+                            <video className="video-fluid" controls>
+                                <source src={"http://localhost:8000/storage/" + movie.intro.filepath} type="video/mp4" />
+                                Tu navegador no admite la reproducción de videos.
+                            </video>
                             <table class="table">
                                 <tbody>
                                     <tr>

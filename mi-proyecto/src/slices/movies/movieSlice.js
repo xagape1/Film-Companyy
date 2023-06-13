@@ -70,6 +70,6 @@ export const movieSlice = createSlice({
 
 });
 
-export const { setisSaving, setisLoading, setMovie, setError, setMovies, setPages, setPage, setFilter } = placeSlice.actions;
+export const { setisSaving, setisLoading, setMovie, setError, setMovies, setPages, setPage, setFilter } = movieSlice.actions;
 
 export default movieSlice.reducer
