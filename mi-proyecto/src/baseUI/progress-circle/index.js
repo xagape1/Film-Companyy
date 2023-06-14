@@ -2,9 +2,6 @@ import './index.css'
 
 const ProgressCircle = ({ percent }) => {
 
-    const dashArray = Math.PI + 100;
-    const dashOffset = Math.PI + (100 - percent);
-
     return <div className="circulo">
         <svg width="34px" height="34px" viewBox='0 0 100 100' className='rotate'>
             <circle cx="52.5" cy="52.5" r="60"

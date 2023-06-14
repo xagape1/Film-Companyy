@@ -1,21 +1,18 @@
-import React from 'react'
 import { useSelector } from 'react-redux';
 import PaginateLink from './PaginateLink';
-const Paginate = () => {
-    const { pages } = useSelector((state) => state.movies);
-    console.log("Pages="+pages)
 
+const Paginate = ({ }) => {
+    const { pages } = useSelector((state) => state.movies);
 
     return (
-        <div>
-            {pages.map((page,i) => (
-                <p key={i}>
-                    <PaginateLink page={page}/>
-                </p>
-            ))}
-
-        </div>
+        <>
+            <ul class="flex flex-row">
+                {pages.map((page) => (
+                    <PaginateLink page={page} />
+                ))}
+            </ul>
+        </>
     )
 }
 
-export default Paginate
+export default Paginate;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useContext } from "react";
-import { UserContext } from "../userContext";
 import { useForm } from "react-hook-form";
 import { useLogin } from '../hooks/useLogin';
 import './Login.css';
@@ -9,7 +8,6 @@ const Login = ({ setLogin }) => {
     const { doLogin, error, setError } = useLogin()
     const onSubmit = data => doLogin(data)
 
-    let { authToken, setAuthToken } = useContext(UserContext);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 

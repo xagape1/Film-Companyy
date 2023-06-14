@@ -98,7 +98,7 @@ const Movies = () => {
             <Header />
           </div>
         </div>
-        <form className="container mb-4 search-form" onSubmit={searchMovies}>
+        <form className="container mb-4 " onSubmit={searchMovies}>
           <div className="search-input-container">
             <input
               className="search-input"

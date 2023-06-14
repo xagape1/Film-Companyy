@@ -19,7 +19,9 @@ body {
 }
 
 .button-link {
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 90vh;
   padding: 10px 20px;
   background-color: #e91e63;
   color: #fff;
@@ -28,10 +30,20 @@ body {
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-  margin-left:1500px ;
   transition: background-color 0.3s ease;
 }
 
+@media (max-width: 768px) {
+  .button-link {
+    margin-left: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+  }
+  
+}
 .button-link:hover {
   background-color: #006eff;
 }

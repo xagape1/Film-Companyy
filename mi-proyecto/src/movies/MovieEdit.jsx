@@ -1,87 +1,146 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { UserContext } from "../userContext";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { setisLoading, setMovie } from '../slices/movies/movieSlice';
-import { getMovie, handleUpdate } from '../slices/movies/thunks';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { UserContext } from '../userContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovie, editMovie } from '../slices/movies/thunks';
 
-const MovieEdit = () => {
-  let navigate = useNavigate();
+export const MovieEdit = () => {
+  const { usuari, email, setUsuari, authToken, setAuthToken } = useContext(UserContext);
+  const { movie, page = 0, error = '', isLoading = true } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
-  let [formulari, setFormulari] = useState({});
-  let { authToken, setAuthToken } = useContext(UserContext);
+
   const { id } = useParams();
-  const { isSaving = true, error="", isLoading, movie } = useSelector((state) => state.movies);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getMovie(authToken, id));
-  }, []);
-
-  useEffect(() => {
-    setFormulari({
-      title: movie.title,
-      description: movie.description,
-      gender: movie.gender,
-    });
-  }, [movie]);
+  const [formulari, setFormulari] = useState({
+    title: '',
+    description: '',
+    gender: '',
+    coverImage: null,
+    coverVideo: null,
+  });
 
   const handleChange = (e) => {
     e.preventDefault();
-    if (e.target.type && e.target.type === "file") {
-      setFormulari({
-        ...formulari,
-        [e.target.name]: e.target.files[0]
-      });
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
+      const file = files[0];
+      setFormulari((prevState) => ({
+        ...prevState,
+        [name]: file,
+      }));
     } else {
-      setFormulari({
-        ...formulari,
-        [e.target.name]: e.target.value
-      });
+      setFormulari((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
     }
   };
 
+  const handleEditMovie = () => {
+    dispatch(editMovie(formulari, authToken, movie.id));
+  };
+
+  useEffect(() => {
+    dispatch(getMovie(id, authToken));
+  }, []);
+
+  useEffect(() => {
+    if (movie) {
+      setFormulari((prevState) => ({
+        ...prevState,
+        title: movie.title,
+        description: movie.description,
+        gender: movie.gender,
+      }));
+    }
+  }, [movie]);
+
   return (
     <>
-      {isLoading ?
-        "cargando..."
-        :
-        <div>
-          <div className="card">
-            <div className="card-header">
-              <h1 className="text-center h2 fw-bold">Edit Movie</h1>
+      <div className="py-9 pl-9">
+        <div className="py-9 flex flex-col gap-y-2">
+          <label className="text-gray-600" htmlFor="Name">
+            Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            value={formulari.title}
+            className="w-1/3 px-4 py-2 border border-gray-300 outline-none focus:border-gray-400"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="w-1/3">
+          <label className="text-gray-600">Descripció</label>
+          <textarea
+            name="description"
+            value={formulari.description}
+            className="w-full h-32 px-4 py-3 border-2 border-gray-300 rounded-sm outline-none focus:border-blue-400"
+            placeholder="Explica'ns alguna cosa d'aquest lloc..."
+            onChange={handleChange}
+          ></textarea>
+
+          <div className="flex justify-center">
+            <div className="mb-3 w-96">
+              <label htmlFor="coverImage" className="form-label inline-block mb-2 text-gray-600">
+                Imatge PNG, JPG or GIF (MAX. 800x400px)
+              </label>
+              <input
+                name="coverImage"
+                onChange={handleChange}
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                type="file"
+                id="coverImage"
+              />
             </div>
-            <form method="post" className="separar" encType="multipart/form-data">
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
-                <input type="text" value={formulari.title} onChange={handleChange} name="title" className="form-control" />
+          </div>
+
+          <div className="flex justify-center">
+            <div className="mb-3 w-96">
+              <label htmlFor="coverVideo" className="form-label inline-block mb-2 text-gray-600">
+                Video MP4
+              </label>
+              <input
+                name="coverVideo"
+                onChange={handleChange}
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                type="file"
+                id="coverVideo"
+              />
+            </div>
+          </div>
+
+          <div className="py-9">
+            {error ? (
+              <div className="flex w-full items-center space-x-2 rounded-2xl bg-red-50 mb-4 px-4 ring-2 ring-red-200">
+                {error}
               </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <textarea name="description" value={formulari.description} onChange={handleChange} className="form-control"></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="gender">Gender</label>
-                <textarea name="gender" value={formulari.gender} onChange={handleChange} className="form-control"></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="cover">Cover</label>
-                <input type="file" onChange={handleChange} name="cover" className="form-control" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="intro">Intro</label>
-                <input type="file" onChange={handleChange} name="intro" className="form-control" />
-              </div>
-              <button className="btn btn-primary" onClick={(e) => {
-                e.preventDefault();
-                dispatch(handleUpdate(authToken, id, formulari, navigate));
-              }}>Update</button>
-              {error ? (<div>{error}</div>) : (<></>)}
-            </form>
+            ) : (
+              <></>
+            )}
+            <button
+              onClick={handleEditMovie}
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Editar Entrada
+            </button>
+            <button
+              onClick={() => {
+                navigate(-1);
+              }}
+              type="submit"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Cancelar
+            </button>
           </div>
         </div>
-      }
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default MovieEdit;

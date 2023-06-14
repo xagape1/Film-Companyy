@@ -1,13 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { useState, useEffect,useContext } from 'react';
 import { useForm } from '../hooks/useForm';
 import { setFilter } from '../slices/movies/movieSlice';
 import { useDispatch } from 'react-redux';
-import { UserContext } from "../userContext";
 import { useSelector } from 'react-redux';
 const MoviesMenu = () => {
-let { usuariId } = useContext(UserContext);
 const { filter } = useSelector((state) => state.movies);
 
 const dispatch= useDispatch();
