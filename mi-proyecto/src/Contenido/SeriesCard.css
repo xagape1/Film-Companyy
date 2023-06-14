@@ -1,28 +1,61 @@
+.series-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+body {
+  overflow-x: hidden;
+}
 .series-card {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-right: 10px;
-  margin-bottom: 20px;
+  width: 450px;
+  height: 100%;
+  position: relative;
 }
 
 .series-card__image {
-  width: 300px;
-  height: 500px;
-  object-fit: cover;
-  margin-right: 10px;
+  width: 40.5vh;
+  height: auto;
 }
 
 .series-card__content {
-  display: flex;
-  flex-direction: column;
+  text-align: center;
+  padding: 0%;
 }
 
 .series-card__title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 2rem;
 }
 
 .series-card__date {
-  font-size: 14px;
-  color: gray;
+  font-size: 1.5rem;
+  color: #888;
+}
+
+@media (min-width: 768px) {
+  .series-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .series-card {
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+}
+
+.ellipsis {
+  position: absolute;
+  top: 65vh;
+  left: 0;
+  z-index: 1;
+}
+
+.circle {
+  position: absolute;
+  top: 0;
+  left: 40vh;
+  z-index: 1;
 }

@@ -11,7 +11,7 @@ const MovieCreate = () => {
 
   const { isSaving = true, error = "" } = useSelector((state) => state.movies);
   let { authToken, setAuthToken } = useContext(UserContext);
-  const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const afegir = (data) => {
     const data2 = { ...data, cover: data.cover[0] }

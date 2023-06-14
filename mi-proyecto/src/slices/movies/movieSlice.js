@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
 
     formulari: [],
@@ -72,4 +73,4 @@ export const movieSlice = createSlice({
 
 export const { setisSaving, setisLoading, setMovie, setError, setMovies, setPages, setPage, setFilter } = movieSlice.actions;
 
-export default movieSlice.reducer
+export default movieSlice;

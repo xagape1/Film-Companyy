@@ -1,0 +1,29 @@
+.circulo {
+    width: 50px;
+    height: 50px;
+    background-color: #006eff;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scale{
+    scale: 0.95;
+    stroke-linecap:round;
+}
+
+.number {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.rotate{
+    rotate: -90deg;
+}
+.percente {
+    position: absolute;
+    font-size: 10px;
+}

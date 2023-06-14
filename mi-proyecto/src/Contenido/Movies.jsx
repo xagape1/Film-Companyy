@@ -42,7 +42,6 @@ const Movies = () => {
       },
     });
 
-    //console.log('data',results);
 
     setMovies(results);
     setMovie(results[0]);
@@ -52,7 +51,6 @@ const Movies = () => {
     }
   };
 
-  // funcion para la peticion de un solo objeto y mostrar en reproductor de videos
   const fetchMovie = async (id) => {
     const { data } = await axios.get(`${API_URL}/movie/${id}`, {
       params: {
@@ -67,21 +65,16 @@ const Movies = () => {
       );
       setTrailer(trailer ? trailer : data.videos.results[0]);
     }
-    //return data
     setMovie(data);
   };
 
   const selectMovie = async (movie) => {
-    // const data = await fetchMovie(movie.id)
-    // console.log(data);
-    // setSelectedMovie(movie)
     fetchMovie(movie.id);
 
     setMovie(movie);
     window.scrollTo(0, 0);
   };
 
-  // funcion para buscar peliculas
   const searchMovies = (e) => {
     e.preventDefault();
     fetchMovies(searchKey);
