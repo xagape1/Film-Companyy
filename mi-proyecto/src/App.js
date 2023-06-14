@@ -41,7 +41,7 @@ function App() {
               <Route path="/movies/add" element={<><MoviesMenu/><MoviesAdd /></>} />
               <Route path="/movies/edit/:id" element={<><MoviesMenu/><MovieEdit /></>} />
               <Route path="/movies/grid" element={<><MoviesMenu/><MoviesGrid /></>} />
-              <Route path="/" element={<><MoviesMenu/><Movies /></>} />
+              <Route path="/" element={<Movies />} />
               <Route path="/series" element={<Series />} />
             </Routes>
           </Router>
